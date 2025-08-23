@@ -1,29 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>YouTube MP3 Downloader</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      input {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        background: #0078d7;
+        color: white;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #005a9e;
+      }
+      #status {
+        margin-top: 15px;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
-    <h1>YouTube MP3 Downloader</h1>
-    <input type="text" id="url" placeholder="Cole o link do YouTube aqui">
-    <button id="download">Baixar MP3</button>
+    <h2>🎵 YouTube MP3 Downloader</h2>
+    <input id="url" type="text" placeholder="Cole a URL do YouTube aqui" />
+    <br />
+    <button onclick="download()">Baixar MP3</button>
     <p id="status"></p>
 
     <script>
-      const urlInput = document.getElementById("url");
-      const button = document.getElementById("download");
-      const status = document.getElementById("status");
+      const { ipcRenderer } = require("electron");
 
-      button.addEventListener("click", async () => {
-        status.textContent = "⏳ Baixando...";
-        try {
-          const path = await window.electronAPI.downloadMP3(urlInput.value);
-          status.textContent = "✅ Baixado em: " + path;
-        } catch (err) {
-          status.textContent = "❌ Erro: " + err;
-        }
-      });
+      async function download() {
+        const url = document.getElementById("url").value;
+        document.getElementById("status").innerText = "⏳ Baixando...";
+        const result = await ipcRenderer.invoke("download-mp3", url);
+        document.getElementById("status").innerText = result.success
+          ? "✅ " + result.message
+          : "❌ Erro: " + result.message;
+      }
     </script>
   </body>
 </html>
