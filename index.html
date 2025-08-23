@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>YouTube MP3 Downloader</title>
+  </head>
+  <body>
+    <h1>YouTube MP3 Downloader</h1>
+    <input type="text" id="url" placeholder="Cole o link do YouTube aqui">
+    <button id="download">Baixar MP3</button>
+    <p id="status"></p>
+
+    <script>
+      const urlInput = document.getElementById("url");
+      const button = document.getElementById("download");
+      const status = document.getElementById("status");
+
+      button.addEventListener("click", async () => {
+        status.textContent = "⏳ Baixando...";
+        try {
+          const path = await window.electronAPI.downloadMP3(urlInput.value);
+          status.textContent = "✅ Baixado em: " + path;
+        } catch (err) {
+          status.textContent = "❌ Erro: " + err;
+        }
+      });
+    </script>
+  </body>
+</html>

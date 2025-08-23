@@ -1,0 +1,42 @@
+{
+  "name": "youtube-converter",
+  "version": "1.0.0",
+  "description": "Um conversor simples de YouTube para MP3",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "author": "Levirroh",
+  "license": "ISC",
+  "dependencies": {
+    "@distube/ytdl-core": "^4.16.12",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "electron": "^28.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.seuapp.youtubeconverter",
+    "productName": "YouTube Converter",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico",
+      "forceCodeSigning": false
+    },
+    "extraResources": [
+      {
+        "from": "node_modules/ffmpeg-static/",
+        "to": "ffmpeg"
+      }
+    ]
+  }
+}
