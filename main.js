@@ -55,15 +55,11 @@ ipcMain.handle("download-mp3", async (event, videoUrl) => {
     // Converte para MP3 com ffmpeg
     await new Promise((resolve, reject) => {
       const ffmpeg = spawn(fixedFfmpegPath, [
-        "-i",
-        tempFile,
+        "-i", tempFile,
         "-vn",
-        "-ab",
-        "192k",
-        "-ar",
-        "44100",
-        "-y",
-        filePath,
+        "-ab", "192k",
+        "-ar", "44100",
+        "-y", filePath,
       ]);
 
       ffmpeg.on("close", (code) => {

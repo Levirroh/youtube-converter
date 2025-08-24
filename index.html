@@ -42,12 +42,10 @@
     <p id="status"></p>
 
     <script>
-      const { ipcRenderer } = require("electron");
-
       async function download() {
         const url = document.getElementById("url").value;
         document.getElementById("status").innerText = "⏳ Baixando...";
-        const result = await ipcRenderer.invoke("download-mp3", url);
+        const result = await window.electronAPI.downloadMP3(url);
         document.getElementById("status").innerText = result.success
           ? "✅ " + result.message
           : "❌ Erro: " + result.message;
